@@ -1,0 +1,24 @@
+{{define "content"}}
+<h2>Добавить новый расход</h2>
+
+<div class="form-container">
+    <form method="POST" action="/save">
+        <div class="form-group">
+            <label>Описание траты (что купили):</label>
+            <input type="text" name="description" required placeholder="Например: Продукты в магните">
+        </div>
+
+        <div class="form-group">
+            <label>Сумма в рублях:</label>
+            <input type="number" step="0.01" name="amount" required placeholder="0.00">
+        </div>
+
+        <div class="form-group">
+            <label>Дата покупки:</label>
+            <input type="date" name="date" required>
+        </div>
+
+        <button type="submit">Сохранить трату</button>
+    </form>
+</div>
+{{end}}

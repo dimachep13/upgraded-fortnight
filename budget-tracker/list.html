@@ -1,0 +1,27 @@
+{{define "content"}}
+<h2>История моих расходов</h2>
+
+<table>
+    <thead>
+     <tr>
+     <th>Описание</th>
+     <th>Сумма (руб.)</th>
+     <th>Дата</th>
+    </tr>
+    </thead>
+    <tbody>
+        
+        {{range .}}
+        <tr>
+        <td>{{.Description}}</td>
+        <td>{{.Amount}}</td>
+        <td>{{.Date}}</td>
+        </tr>
+        {{else}}
+        <tr>
+        <td colspan="3" style="text-align: center;">Трат пока нет. Добавьте что-нибудь через форму</td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{end}}

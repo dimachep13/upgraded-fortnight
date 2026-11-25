@@ -33,3 +33,10 @@ func main() {
 		fmt.Println("Не удалось запустить сервер:", err)
 	}
 }
+	mux.HandleFunc("/", handlers.ListHandler)
+	mux.HandleFunc("/add", handlers.FormHandler)
+	mux.HandleFunc("/save", handlers.SaveHandler)
+	
+	mux.HandleFunc("/edit", handlers.EditFormHandler)
+	mux.HandleFunc("/update", handlers.UpdateHandler)
+	mux.HandleFunc("/delete", handlers.DeleteHandler)

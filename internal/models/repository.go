@@ -75,7 +75,7 @@ func (r *ExpenseRepository) Create(e Expense) error {
 }
 
 func (r *ExpenseRepository) GetFiltered(categoryID string, fromDate string, toDate string) ([]Expense, error) {
-	// Базовый запрос с JOIN, чтобы сразу получить имя категории (избегаем проблемы N+1 запросов!)
+
 	query := `
 		SELECT e.id, e.amount, e.description, e.date, e.category_id, IFNULL(c.name, 'Без категории') 
 		FROM expenses e
@@ -115,4 +115,25 @@ func (r *ExpenseRepository) GetFiltered(categoryID string, fromDate string, toDa
 		list = append(list, e)
 	}
 	return list, nil
+}
+func (r *ExpenseRepository) GetByID(id int) (Expense, error) {
+	var e Expense
+	err := r.DB.QueryRow(
+		"SELECT id, amount, description, date, category_id FROM expenses WHERE id = ?",
+		id,
+	).Scan(&e.ID, &e.Amount, &e.Description, &e.Date, &e.CategoryID)
+	return e, err
+}
+
+func (r *ExpenseRepository) Update(e Expense) error {
+	_, err := r.DB.Exec(
+		"UPDATE expenses SET amount = ?, description = ?, date = ?, category_id = ? WHERE id = ?",
+		e.Amount, e.Description, e.Date, e.CategoryID, e.ID,
+	)
+	return err
+}
+
+func (r *ExpenseRepository) Delete(id int) error {
+	_, err := r.DB.Exec("DELETE FROM expenses WHERE id = ?", id)
+	return err
 }
